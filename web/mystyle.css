@@ -1,0 +1,99 @@
+html {font: 1,5em/1.4 Georgia, serif;padding: 0;}
+body {display: flex;flex-flow: row wrap;flex-direction: column;background-color: Lavender;margin: 5px auto;max-width: 90%;}
+header {display: flex;flex-direction: column;flex:1 60%;font-size: 1.0em; text-align: center; }
+main {display: flex;flex-direction: column;flex:1 90%}
+/*h1 { font-size: 2.5em; font-family: cursive; background-color: orange; text-align: center; }*/
+/*main h1 { font-size: 0.5em; text-align: center; }*/
+main nav {margin-left: 20%;margin-right: 20%;} /*background-color: lime;}*/
+footer {display: flex;flex:1 80%; align-self: center; text-align: center;font-size: 1.5em;margin-top: 5%}
+#menue p{font-size: 1.5em}
+td { border: 2px solid black; margin-top: 0px;margin-bottom: 0px;padding: 10px; }
+main table  {align-self: center; font-size: 1.5em;margin-top: 0px;border-collapse: collapse; }
+p { font-size: 1.5em; }
+.log { font-size: 1em;}
+
+fieldset {
+	border: none;
+	font-size: 1.8em;
+}
+
+.btn {
+	/*border: 2px solid red;*/
+	margin-right: 10%;	
+	margin-left: 10%;	
+	padding-left:0%;
+	padding-right:0%;
+	font-size: 2.0em;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+ul li{
+	padding-bottom: 1em;
+}
+
+/* Ab hier nur fuer Pumpensteuerung */
+.toggle label {
+	font-size: 1.5em; position: relative;	display: inline-block; width: 10em; height: 3.5em; 
+	margin-left: 1em; margin-top: 1em;}
+
+.toggle input {display: none; /*Original HTML-input-Element verstecken*/}
+
+.toggle .slider {
+	/* Grundfl�che */
+	position: absolute;	cursor: pointer;	top: 1.5em;	left: 2em;	width: 4em;	height: 2em;
+	margin-top: 0.2em;
+	background-color: #c32e04;	/* red */
+	transition: all .3s ease-in-out;
+	border-radius: 1em;
+}
+
+.toggle .slider:before {
+	/* verschiebbarer Button */
+	position: absolute;
+	content: "";
+	height: 1.6em;
+	width: 1.6em;
+	left: 0.2em;
+	bottom: 0.2em;
+	background-color: white;
+	border-radius: 50%;
+	transition: all .3s ease-in-out;
+}
+
+.toggle input:checked + .slider {
+	background-color: #5a9900;	/* green */
+}
+
+.toggle input:focus + .slider {
+	background-color: pink;
+	box-shadow: 0 0 1px #5a9900;
+}
+
+.toggle input:checked + .slider:before {
+	-webkit-transform: translateX(1.9em);	/* Android 4 */
+	-ms-transform: translateX(1.9em);	/* IE9 */	
+	transform: translateX(1.9em);
+}
+
+.text .slider:after {
+	/* Text vor dem FlipFlop-Schalter */	
+	position: absolute;
+	content: "AUS";
+	color: #c32e04;
+	font-weight: bold;
+	height: 1.6em;
+	left: -2.5em;
+	bottom: 0.2em;
+}
+
+.text input:checked + .slider:after {
+	/* Text hinter dem FlipFlop-Schalter */	
+	position: absolute;
+	content: "AN";
+	color: #5a9900;
+	left: 4.5em;
+}

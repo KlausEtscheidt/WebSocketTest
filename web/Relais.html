@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang=/"de-DE/">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Relais</title>
+<link rel="stylesheet" href="../mystyle.css" type="text/css">
+</head>
+<body onload="getStatus()">
+<header>
+<h1>Pumpe und Ventile schalten</h1>
+</header>
+<main>
+		<form id="myForm">
+		  <fieldset>
+			<ul>
+			  <li> 
+				<label>
+				  <input type="checkbox" name="relais" value="Pumpe1">
+				  Pumpe
+				</label>
+			  </li>
+			  <li> 
+				<label>
+				   <input type="checkbox" name="relais" value="Ventil1">
+				   Ventil 1 Rasen
+				</label>
+			  </li>
+			  <li>  
+				<label>
+				  <input type="checkbox" name="relais" value="Ventil2">
+				  Ventil 2 Rasen
+				</label>
+			  </li>
+			  <li>  
+				<label>
+				  <input type="checkbox" name="relais" value="Ventil3">
+				  Ventil 3 Str&auml;ucher
+				</label>
+			  </li>
+			</ul> 
+		  </fieldset> 
+			<input class='btn' type="button" value="OK" onclick="sendFormData()">
+			<input class='btn' type="button" value="ESC" onclick="hauptseite()" >
+		</form>
+
+</main>
+<footer>
+<a href="/index.html">Hauptseite</a>
+</footer>
+
+<!-- Konfiguration und Bibliothek laden -->
+<script src="./config_local.js"></script>
+<script src="./Gartenlib.js"></script>
+<script>
+
+//Callback
+//Holt den aktuellen Relais-Status vom Server und besetzt Formular entsprechend vor
+function handle_getStatus_answer(evt){
+    console.log("Pumpenstatus ist: " + evt.data);
+	var myform=document.getElementById('myForm');
+    var relais_status=JSON.parse(evt.data);		
+	for (i=0;i<4;i++) {
+    	console.log(relais_status[i]);
+		myform.relais[i].checked=relais_status[i];
+	}
+	
+}
+
+//Callback
+function handle_setStatus_answer(evt){
+    console.log("Pumpenstatus geändert: " + evt.data);
+	window.location.href = "/index.html";
+}
+
+//Holt den aktuellen Relais-Status vom Server und besetzt Formular entsprechend vor
+function getStatus(){
+	console.log("Ip: " + ipSocketServer);
+	socket =OpenSocket(handle_getStatus_answer);
+}
+
+function sendFormData(){
+	var myform=document.getElementById('myForm');
+	var relaisByte=0;
+	for (i=0;i<4;i++) {
+		if (myform.relais[i].checked) {
+			relaisByte+=(1<<i);
+		}
+	}
+	console.log(relaisByte);
+	myform.relais.forEach(function (box) {
+    	console.log(box.checked);
+	});
+	console.log(myform.relais);
+	data='Bewaesserung;schalten;alles;'+String(relaisByte)
+	socket =OpenSocket(handle_setStatus_answer);
+	
+}
+function hauptseite(){
+	window.location.href = "/index.html";
+}
+
+var socket;
+var data='Bewaesserung;Status';
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+__pycache__/
+.vscode/
+log/
+config_xml/
+src/
+
+config_local.py
+*.code-workspace
