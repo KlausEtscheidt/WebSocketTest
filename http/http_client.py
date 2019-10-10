@@ -8,9 +8,15 @@ def run():
         cmd = input('input command (ex. GET index.html): ')  
         
         if cmd == 'exit': #tipe exit to end it  
-            break  
+            break
 
-        #cmd = bytes( "{}".format(cmd), 'ascii')
+        send(cmd)
+
+def run2():
+    for cmd in range(10):
+        send(str(cmd))
+        
+def send(cmd):
         cmd = bytes( cmd, 'ascii')
         req = urllib.request.Request(url='http://localhost:8080',
                                     data=cmd, method='POST')
@@ -23,4 +29,4 @@ def run():
 
 
 if __name__ == '__main__':
-  run()
+  run2()
