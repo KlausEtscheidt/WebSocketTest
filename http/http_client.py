@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
 import urllib.request
+import datetime
+import logging
 
-def run():  
+logger = logging.getLogger('name')
+
+def send_input():  
     print('http client is connecting...')
     while 1:  
         cmd = input('input command (ex. GET index.html): ')  
@@ -10,23 +14,28 @@ def run():
         if cmd == 'exit': #tipe exit to end it  
             break
 
-        send(cmd)
+        socket_send(cmd)
 
-def run2():
-    for cmd in range(10):
-        send(str(cmd))
-        
-def send(cmd):
+def socket_send(cmd):
         cmd = bytes( cmd, 'ascii')
         req = urllib.request.Request(url='http://localhost:8080',
                                     data=cmd, method='POST')
 
         with urllib.request.urlopen(req) as f:
-            print(str(f.read(),'ascii'))
+            logger.info(str(f.read(),'ascii'))
 
         #print('headers: {}'.format(f.headers))
-        print(f.status,f.reason)
+        logger.debug('%s %s',f.status,f.reason)
 
+def send_numbers():
+    for i in range(200):
+        socket_send(str(i))
 
-if __name__ == '__main__':
-  run2()
+now = datetime.datetime.now()
+
+#logger.setLevel(logging.ERROR)
+logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
+logger.info("Start")
+send_numbers()
+logger.info(datetime.datetime.now()-now)
+input('Ende ...')

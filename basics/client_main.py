@@ -1,5 +1,7 @@
 import socket
 import sys
+import datetime
+
 port =8889
 print('----------sending to port ',port,' ---------------')
 def socket_send(token):
@@ -71,5 +73,16 @@ def testbytes():
     print("len ",len(msg))   
     print ('sending {}'.format( msg))
     socket_send(msg)
-menu()
+
+def send_numbers():
+    for i in range(200):
+        socket_send(i)
+
+now = datetime.datetime.now()
+print(now)
+send_numbers()
+print(datetime.datetime.now()-now)
+input('Ende ...')
+
+#menu()
 #testbytes()    

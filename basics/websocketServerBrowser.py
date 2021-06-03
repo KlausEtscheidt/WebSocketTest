@@ -13,7 +13,6 @@ async def time(websocket, path):
         await websocket.send(now)
         name = await websocket.recv()
         print("------{}------".format(name))
-
         await asyncio.sleep(random.random() * 10)
 
 async def echo(websocket, path):
