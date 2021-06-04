@@ -58,7 +58,7 @@ class myRequestHandler(BaseHTTPRequestHandler):
 
 def run():  
   print('http server is starting...')
-  serv = HTTPServer(('',8080),myRequestHandler)
+  serv = HTTPServer(('localhost',8080),myRequestHandler)
   print('http server is running...')
   serv.serve_forever()
 

@@ -13,16 +13,15 @@ def socket_command_listener():
     stop=False
     
     HOST = ''                 # Symbolic name meaning all available interfaces
-    
 
     if True:  #Forever Wird das gebraucht ???
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.bind((HOST, port))
         s.listen(1)
-        s.settimeout(5)
+        s.settimeout(500)
         # Forever bis global stop gesetzt  ----
         while not stop:
-            #print('warte auf verbindung')
+            print('warte auf verbindung')
             #Hier wird geblockt, d.h auf eingehende Daten gewartet
             #Daher sollte Modul in eigenem thread laufen
             try:
@@ -36,10 +35,10 @@ def socket_command_listener():
                         print('command',command)
                         #sende ergebnis
                         conn.sendall( bytes( "{}".format(answer), 'ascii') )
-                    conn.close()
+                    #conn.close()
                     if (command=='Stop'):
                         s.close()
-                        print("Socket fordert Ende")
+                        print("client fordert Ende")
                         break #Ende forever
             except socket.timeout:
                 pass
@@ -53,3 +52,4 @@ def socket_command_listener():
 if __name__ == '__main__':
     print ('in main')
     socket_command_listener()
+    print ('verlasse main')
