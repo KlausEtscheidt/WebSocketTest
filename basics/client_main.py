@@ -2,7 +2,7 @@ import socket
 import sys
 import datetime
 
-port =8889
+port =8887
 print('----------sending to port ',port,' ---------------')
 def socket_send(token):
     # Create a TCP/IP socket
@@ -75,14 +75,16 @@ def testbytes():
     socket_send(msg)
 
 def send_numbers():
-    for i in range(200):
+    #for i in range(200):
+    for i in range(10):
         socket_send(i)
+    socket_send('stop')
 
 now = datetime.datetime.now()
 print(now)
 send_numbers()
 print(datetime.datetime.now()-now)
-input('Ende ...')
+input('Ende ...Taste dr')
 
 #menu()
 #testbytes()    

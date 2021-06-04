@@ -11,6 +11,8 @@ PORT = 8888 # Arbitrary non-privileged port
 #erbt von socketserver(Modul) .BaseRequestHandler(Basisklasse)
 class KE_ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
+    parent = None
+
     def handle(self):
         reply=""
         data = str(self.request.recv(1024), 'utf-8')
@@ -47,15 +49,16 @@ class KE_socket_listener:
         Der Server kann vom Handler mit self.server angesprochen werden
     '''
 
-    def __init__(self, host, port, RequestHandler):
+    def __init__(self, parent, host, port, RequestHandler):
         self.host = host
         self.port = port
+        RequestHandler.parent = parent
         for i in range(1,20):
             try:
                 #server erst nur anlegen, keine sockets verbinden, damit Eigenschaften gesetzt werden können
                 ####self.server = KE_ThreadedTCPServer((host, port), KE_ThreadedTCPRequestHandler, bind_and_activate=False)
                 self.server = KE_ThreadedTCPServer((host, port), RequestHandler, bind_and_activate=False)
-                # Die Adresse wird normal nach Ende der Kommunikation für eine Zeit reserviert. 
+                # Die Adresse wird normal nach Ende der Kommunikation für eine Zeit reserviert.
                 # Hier: mehrfach verwenden ohne Wartezeit
                 #Der for-loop ist daher eigentlich obsolet (hat auch nicht geholfen)
                 self.server.allow_reuse_address = True 
@@ -74,13 +77,6 @@ class KE_socket_listener:
         server_thread.daemon = True
         server_thread.start()
         #return(server_thread)
-
-        #Endlos
-        while True:
-            #Abbruch uber Socket gefordert ?
-            if self.server.stop:
-                break
-        self.close()
 
     def __del__(self):
         self.close()

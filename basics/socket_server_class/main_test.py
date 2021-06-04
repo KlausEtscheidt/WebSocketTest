@@ -16,13 +16,21 @@ class RQHandler(KE_ThreadedTCPRequestHandler):
     def cmd_handler(self, command):
         print('Got here ------ <{}>'.format(command))
 
-def main():
+class Test:
+    def __init__(self):
 
-    #Startet socketserver in eigenem thread
-    host = '127.0.0.1'
-    port = 8887
-    socket_input=KE_socket_listener(host, port, RQHandler)
+        #Startet socketserver in eigenem thread
+        host = '127.0.0.1'
+        port = 8887
+        socket_input=KE_socket_listener(self, host, port, RQHandler)
 
-main()
+        #Endlos nur zur Demo, damit main nicht endet
+        while True:
+            #Abbruch uber Socket gefordert ?
+            if socket_input.server.stop:
+                break
+        socket_input.close()
+
+Test()
 pass
 
