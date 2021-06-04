@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 
 import urllib.request
 
@@ -11,12 +11,13 @@ def run():
             break  
 
         #cmd = bytes( "{}".format(cmd), 'ascii')
-        cmd = bytes( cmd, 'ascii')
+        
+        cmd = bytes( cmd, 'utf-8')
         req = urllib.request.Request(url='http://localhost:8080',
                                     data=cmd, method='POST')
 
         with urllib.request.urlopen(req) as f:
-            print(str(f.read(),'ascii'))
+            print(str(f.read(),'utf-8'))
 
         #print('headers: {}'.format(f.headers))
         print(f.status,f.reason)
