@@ -2,7 +2,7 @@ import socket
 import sys
 import datetime
 
-port =8887
+port =8889
 print('----------sending to port ',port,' ---------------')
 def socket_send(token):
     # Create a TCP/IP socket
@@ -16,7 +16,7 @@ def socket_send(token):
     try:
         
         # Send data
-        message = bytes("{}".format(token), 'ascii')
+        message = bytes("{}".format(token), 'utf-8')
         #message=token
         print ('sending {}'.format( message))
         sock.sendall(message)
@@ -28,7 +28,7 @@ def socket_send(token):
         while  amount_received > 0:
             data = sock.recv(8)
             amount_received = len(data)
-            heard+=str(data,'ascii')
+            heard+=str(data,'utf-8')
 
         print ('received "%s"' % heard)
     except:
@@ -80,11 +80,17 @@ def send_numbers():
         socket_send(i)
     socket_send('stop')
 
-now = datetime.datetime.now()
-print(now)
-send_numbers()
-print(datetime.datetime.now()-now)
-input('Ende ...Taste dr')
+# now = datetime.datetime.now()
+# print(now)
+# send_numbers()
+# print(datetime.datetime.now()-now)
+# input('Ende ...Taste dr')
 
 #menu()
-#testbytes()    
+#testbytes()
+#socket_send('cut|filename')
+#socket_send('chapter|filename')
+filename = r"K:\chk\xx is back\clip\actress\l\leonie saint"
+filename += r"\°jana_bach °leonie_saint in  - von 0 auf 100 scene 2 +++ ~mwmw pool.mp4"
+
+socket_send('brightness|' + filename + '|brightness|1.5')
